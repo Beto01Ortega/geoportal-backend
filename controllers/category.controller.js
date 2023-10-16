@@ -1,5 +1,4 @@
-const { Op } = require('sequelize');
-const { Category, Layer, FileAccess, User } = require('../database');
+const { Category, Layer, User } = require('../database');
 
 const CategoryController = {};
 
@@ -9,17 +8,11 @@ CategoryController.getAll = (req, res) => {
     order: [
       ['id_category', 'ASC'],
       ['layers', 'id_layer', 'ASC'],
-      ['layers', 'files', 'id_file', 'ASC'],
     ],
     include: [
       { model: User, as: 'user' },
       { model: Category },
-      { 
-        model: Layer, 
-        include: [
-          { model: FileAccess },
-        ] 
-      },
+      { model: Layer },
     ],
   }).then(categories => {
     return res.status(200).send(categories);
@@ -48,16 +41,10 @@ CategoryController.getRecord = (req, res) => {
     where: { external_id: req.params.id },
     order: [
       ['layers', 'id_layer', 'ASC'],
-      ['layers', 'files', 'id_file', 'ASC'],
     ],
     include: [
       { model: Category },
-      { 
-        model: Layer, 
-        include: [
-          { model: FileAccess }
-        ] 
-      },
+      { model: Layer },
     ],
   }).then(category => {
     return res.status(200).send(category);

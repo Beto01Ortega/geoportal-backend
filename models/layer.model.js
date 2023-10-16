@@ -8,10 +8,16 @@ module.exports = (sequelize, type) => {
       autoIncrement:true,
     },
     name: type.STRING,
+    type: type.STRING,
+    legends: type.JSONB,
+    filename: type.STRING,
+    filepath: type.STRING,
+    folderpath: type.STRING,
+    styles: type.STRING,
     description: type.TEXT,
-    files_count: {
-      type: type.INTEGER,
-      defaultValue: 0
+    published: { 
+      type: type.BOOLEAN, 
+      defaultValue: false 
     },
     status: { 
       type: type.BOOLEAN, 

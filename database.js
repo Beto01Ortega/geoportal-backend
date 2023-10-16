@@ -4,7 +4,6 @@ const { generateHash } = require('./lib/helpers');
 const RoleModel     = require('./models/role.model');
 const UserModel     = require('./models/user.model');
 const CategoryModel = require('./models/category.model');
-const FileModel     = require('./models/file.model');
 const LayerModel    = require('./models/layer.model');
 const ActivityModel = require('./models/activity.model');
 
@@ -22,7 +21,6 @@ const sequelize = new Sequelize(
 const Role       = RoleModel(sequelize, DataTypes);
 const User       = UserModel(sequelize, DataTypes);
 const Category   = CategoryModel(sequelize, DataTypes);
-const FileAccess = FileModel(sequelize, DataTypes);
 const Layer      = LayerModel(sequelize, DataTypes);
 const Activity   = ActivityModel(sequelize, DataTypes);
 
@@ -41,9 +39,6 @@ Layer.belongsTo(Category, { as: 'category', foreignKey: 'category_id' });
 
 Category.hasMany(Category, { onDelete: 'CASCADE', foreignKey: 'parent_id' });
 Category.belongsTo(Category, { as: 'parent', foreignKey: 'parent_id' });
-
-Layer.hasMany(FileAccess, { onDelete: 'CASCADE', foreignKey: 'layer_id' });
-FileAccess.belongsTo(Layer, { as: 'layer', foreignKey: 'layer_id' });
 
 (async () => {
   await sequelize.sync();
@@ -80,6 +75,5 @@ module.exports = {
   User,
   Category,
   Layer,
-  FileAccess,
   Activity,
 };
