@@ -10,7 +10,7 @@ router.get(`/${PATH}/get/:id`, ensureAuth, Controller.getUser);
 
 router.post(`/${PATH}`, ensureAuth, Controller.addUser);
 router.put(`/${PATH}/:id`, ensureAuth, Controller.editUser);
-router.patch(`/${PATH}/status/:id`, ensureAuth, Controller.toggleStatus);
+router.put(`/${PATH}/status/:id`, ensureAuth, Controller.toggleStatus);
 
 router.delete(`/${PATH}/:id`, ensureAuth, Controller.removeUser);
 
