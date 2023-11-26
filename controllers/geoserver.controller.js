@@ -12,7 +12,7 @@ GeoServerController.createDataStore = (req, res) => {
     if(!layer.publish) {
       instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores`, {
         dataStore: {
-          name: layer.name,
+          name: "ds_"+layer.external_id,
           connectionParameters: {
             entry: [
               {
@@ -43,7 +43,7 @@ GeoServerController.createShapeLayer = (req, res) => {
   }).then(layer => {
     if(!layer.publish) {
       let filename = layer.filename.split(".")[0];
-      instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores/${layer.name}/featuretypes`, {
+      instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores/ds_${layer.external_id}/featuretypes`, {
         featureType: {
           name: layer.external_id,
           nativeName: filename,
@@ -122,7 +122,7 @@ GeoServerController.createCoverageStore = (req, res) => {
     if(!layer.published) {
       instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores`, {
         coverageStore: {
-          name: layer.name,
+          name: "cs_"+layer.external_id,
           workspace: {
             name: process.env.GEOSERVER_WSPACE
           },
@@ -153,7 +153,7 @@ GeoServerController.createRasterLayer = (req, res) => {
     where: { external_id: req.params.id }, 
   }).then(layer => {
     let filename = layer.filename.split(".")[0];
-    instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores/${layer.name}/coverages`, {
+    instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores/cs_${layer.external_id}/coverages`, {
       coverage: {
         name: layer.external_id,
         nativeName: filename,
@@ -187,7 +187,7 @@ GeoServerController.publishShape = (req, res) => {
     if(!layer.published) {
       instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores`, {
         dataStore: {
-          name: layer.name,
+          name: "ds_"+layer.external_id,
           connectionParameters: {
             entry: [
               {
@@ -199,7 +199,7 @@ GeoServerController.publishShape = (req, res) => {
         }
       }).then(response => {
         let filen = layer.filename.split(".")[0];
-        instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores/${layer.name}/featuretypes`, {
+        instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/datastores/ds_${layer.external_id}/featuretypes`, {
           featureType: {
             name: layer.external_id,
             nativeName: filen,
@@ -272,7 +272,7 @@ GeoServerController.publishRaster = (req, res) => {
     if(!layer.published) {
       instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores`, {
         coverageStore: {
-          name: layer.name,
+          name: "cs_"+layer.external_id,
           workspace: {
             name: process.env.GEOSERVER_WSPACE
           },
@@ -282,7 +282,7 @@ GeoServerController.publishRaster = (req, res) => {
         }
       }).then(response => {
         let filen = layer.filename.split(".")[0];
-        instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores/${layer.name}/coverages`, {
+        instance.post(`/workspaces/${process.env.GEOSERVER_WSPACE}/coveragestores/cs_${layer.external_id}/coverages`, {
           coverage: {
             name: layer.external_id,
             nativeName: filen,
