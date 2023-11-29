@@ -9,7 +9,7 @@ const PATH = 'layers';
 
 router.get(`/${PATH}/all`, ensureAuth, Controller.getAll);
 router.get(`/${PATH}/get/:id`, ensureAuth, Controller.getRecord);
-router.get(`/${PATH}/download/:path`, ensureAuth, Controller.downloadFile);
+router.get(`/${PATH}/download/:path`, Controller.downloadFile);
 
 router.post(`/${PATH}/shapes`, ensureAuth, uploadFiles, Controller.addLayerShapes);
 router.post(`/${PATH}/raster`, ensureAuth, uploadFile, Controller.addLayerRaster);
