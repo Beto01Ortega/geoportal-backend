@@ -33,6 +33,7 @@
     "pg-hstore": "^2.3.4",
     "secure-random-password": "^0.2.3",
     "sequelize": "^6.32.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.11.0"
   }
 }
