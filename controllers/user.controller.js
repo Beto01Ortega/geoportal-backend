@@ -26,7 +26,7 @@ UsersController.getUsers = (req, res) => {
       return res.status(200).send(users);
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
   } else {
     return res.status(403).send({ message: 'Acción no permitida para este usuario.' });
@@ -48,7 +48,7 @@ UsersController.getUser = (req, res) => {
       return res.status(200).send(user);
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
   } else {
     return res.status(403).send({ message: 'Acción no permitida para este usuario.' });
@@ -62,7 +62,7 @@ UsersController.addUser = async (req, res) => {
       password: generateHash(req.body.password)
     }).then(async (user) => {
       if (!user)
-        return res.status(400).send({ message: 'The record could not be created.' });
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   
       return res.status(200).send({ data: user.id_user });
     }).catch(err => {
@@ -80,12 +80,12 @@ UsersController.editUser = (req, res) => {
       where: { external_id: req.params.id }
     }).then(user => {
       if (!user)
-        return res.status(400).send({ message: 'The record could not be updated.' });
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   
       return res.status(200).send({ data: user });
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
   } else {
     return res.status(403).send({ message: 'Acción no permitida para este usuario.' });
@@ -101,7 +101,7 @@ UsersController.toggleStatus = async (req, res) => {
       return res.status(200).send({ data: 1 });
     } catch (error) {
       console.log(error);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     }
   } else {
     return res.status(403).send({ message: 'Acción no permitida para este usuario.' });
@@ -114,12 +114,12 @@ UsersController.removeUser = (req, res) => {
       where: { external_id: req.params.id }
     }).then(user => {
       if (!user)
-        return res.status(400).send({ message: 'The record could not be deleted.' });
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   
       return res.status(200).send({ data: user });
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
   } else {
     return res.status(403).send({ message: 'Acción no permitida para este usuario.' });

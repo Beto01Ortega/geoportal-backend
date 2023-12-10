@@ -18,7 +18,7 @@ CategoryController.getAll = (req, res) => {
     return res.status(200).send(categories);
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -32,7 +32,7 @@ CategoryController.getAllSub = (req, res) => {
     return res.status(200).send(categories);
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -50,7 +50,7 @@ CategoryController.getRecord = (req, res) => {
     return res.status(200).send(category);
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -61,7 +61,7 @@ CategoryController.addRecord = (req, res) => {
   })
     .then(async (category) => {
       if (!category)
-        return res.status(400).send({ message: 'The record could not be created.' });
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
       var usr = null;
       try {
@@ -78,7 +78,7 @@ CategoryController.addRecord = (req, res) => {
       });
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
 };
 
@@ -87,12 +87,12 @@ CategoryController.editRecord = (req, res) => {
     where: { external_id: req.params.id }
   }).then(category => {
     if (!category)
-      return res.status(400).send({ message: 'The record could not be updated.' });
+      return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
     return res.status(200).send({ data: category });
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -101,12 +101,12 @@ CategoryController.removeRecord = (req, res) => {
     where: { external_id: req.params.id }
   }).then(category => {
     if (!category)
-      return res.status(400).send({ message: 'The record could not be deleted.' });
+      return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
     return res.status(200).send({ data: category });
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 

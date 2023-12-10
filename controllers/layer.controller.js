@@ -14,7 +14,7 @@ LayerController.getAll = (req, res) => {
     return res.status(200).send(categories);
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -25,7 +25,7 @@ LayerController.getRecord = (req, res) => {
     return res.status(200).send(layer);
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -117,14 +117,14 @@ LayerController.addLayerShapes = (req, res) => {
         published: false,
       }).then(layer => {
         if (!layer)
-          return res.status(400).send({ message: 'The record could not be created.' });
+          return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
         // return res.status(200).send({ message: `Archivo ZIP subido y archivo .shp (${shpFileName}) descomprimido en la carpeta "geodata".`});
         return res.status(200).send(layer);
 
       }).catch(err => {
         console.log(err);
-        return res.status(500).send({ message: 'An error occurred in the request.' });
+        return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
       });
 
     } else {
@@ -162,13 +162,13 @@ LayerController.addLayerRaster = (req, res) => {
       published: false,
     }).then(layer => {
       if (!layer)
-        return res.status(400).send({ message: 'The record could not be created.' });
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     
       // return res.send({ message: `Archivo TIF subido y copiado a la carpeta "geodata".`});
       return res.status(200).send(layer);
     }).catch(err => {
       console.log(err);
-      return res.status(500).send({ message: 'An error occurred in the request.' });
+      return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
   } else {    
     return res.status(400).send({ message: 'La solicitud no tiene el archivo comprimido.' });
@@ -180,12 +180,12 @@ LayerController.editRecord = (req, res) => {
     where: { external_id: req.params.id }
   }).then(layer => {
     if (!layer)
-      return res.status(400).send({ message: 'The record could not be updated.' });
+      return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
     return res.status(200).send({ data: layer });
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 
@@ -194,12 +194,12 @@ LayerController.removeRecord = (req, res) => {
     where: { external_id: req.params.id }
   }).then(layer => {
     if (!layer)
-      return res.status(400).send({ message: 'The record could not be deleted.' });
+      return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
 
     return res.status(200).send({ data: layer });
   }).catch(err => {
     console.log(err);
-    return res.status(500).send({ message: 'An error occurred in the request.' });
+    return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
 

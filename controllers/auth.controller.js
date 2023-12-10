@@ -32,7 +32,7 @@ AuthController.login = (req, res) => {
           token: token,
         });
       } else {
-        return res.status(401).send({ message: 'Contraseña incorrecta.' });
+        return res.status(401).send({ message: 'Usuario o contraseña incorrectos.' });
       }
     }
   }).catch((err) => {

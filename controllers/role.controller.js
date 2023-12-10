@@ -9,7 +9,7 @@ RoleController.getRoles = (req, res) => {
         return res.status(200).send(roles);
     }).catch(err => {
         console.log(err);
-        return res.status(500).send({ message: 'An error occurred in the request.' });
+        return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
     });
 };
 
