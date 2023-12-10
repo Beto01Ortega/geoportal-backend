@@ -27,7 +27,7 @@ GeoServerController.createDataStore = (req, res) => {
         return res.status(200).send(response.data);
       }).catch(err => {
         console.log(err.response)
-        logger.error({ location: 'Geoserver - Data Store', data: err?.response?.data, url: err?.config?.url });
+        logger.error(err?.response?.data, { location: 'Geoserver - Data Store', url: err?.config?.url });
         return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
       });
     } else {
@@ -61,7 +61,7 @@ GeoServerController.createShapeLayer = (req, res) => {
         return res.status(200).send(response.data);
       }).catch(err => {
         console.log(err?.response);
-        logger.error({ location: 'Geoserver - Shape Layers', data: err?.response?.data, url: err?.config?.url });
+        logger.error(err?.response?.data, { location: 'Geoserver - Shape Layers', url: err?.config?.url });
         return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.', error: err });
       });
 
@@ -104,7 +104,7 @@ GeoServerController.addStyles = (req, res) => {
               return res.status(500).send({ message: 'Error al aplicar los estilos a la capa.', error: err });
             });
         }).catch(err => {          
-          logger.error({ location: 'Geoserver - Shape Styles', data: err?.response?.data, url: err?.config?.url });
+          logger.error(err?.response?.data, { location: 'Geoserver - Shape Styles', url: err?.config?.url });
           return res.status(500).send({ message: 'Error al publicar los estilos.', error: err });
         });
       } else {
@@ -138,7 +138,7 @@ GeoServerController.createCoverageStore = (req, res) => {
         return res.status(200).send(response.data);
       }).catch(err => {
         console.log(err?.response);
-        logger.error({ location: 'Geoserver - Coverage Store', data: err?.response?.data, url: err?.config?.url });
+        logger.error(err?.response?.data, { location: 'Geoserver - Coverage Store', url: err?.config?.url });
 
         return res.status(500).send({ 
           message: 'Ha ocurrido un error al procesar la solicitud.',
@@ -175,7 +175,7 @@ GeoServerController.createRasterLayer = (req, res) => {
       return res.status(200).send(response.data);
     }).catch(err => {
       console.log(err);
-      logger.error({ location: 'Geoserver - Raster Layer', data: err?.response?.data, url: err?.config?.url });
+      logger.error(err?.response?.data, { location: 'Geoserver - Raster Layer', url: err?.config?.url });
 
       return res.status(500).send({ 
         message: 'Ha ocurrido un error al procesar la solicitud.',
