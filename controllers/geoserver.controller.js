@@ -6,6 +6,8 @@ const { Layer } = require('../database');
 
 const GeoServerController = {};
 
+
+// FUNCIONES PARA VECTORES
 GeoServerController.createDataStore = (req, res) => {
   Layer.findOne({
     where: { external_id: req.params.id }, 
@@ -119,6 +121,7 @@ GeoServerController.addStyles = (req, res) => {
   });
 }
 
+// FUNCIONES PARA RASTER
 GeoServerController.createCoverageStore = (req, res) => {
   Layer.findOne({
     where: { external_id: req.params.id }, 

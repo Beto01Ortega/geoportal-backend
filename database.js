@@ -7,6 +7,8 @@ const CategoryModel = require('./models/category.model');
 const LayerModel    = require('./models/layer.model');
 const ActivityModel = require('./models/activity.model');
 
+const VisitModel = require('./models/visit.model');
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -23,6 +25,7 @@ const User       = UserModel(sequelize, DataTypes);
 const Category   = CategoryModel(sequelize, DataTypes);
 const Layer      = LayerModel(sequelize, DataTypes);
 const Activity   = ActivityModel(sequelize, DataTypes);
+const Visit      = VisitModel(sequelize, DataTypes);
 
 // Definición de relaciones
 Role.hasMany(User, { as: 'users', onDelete: 'CASCADE', foreignKey: 'role_id' });
@@ -57,6 +60,10 @@ Category.belongsTo(Category, { as: 'parent', foreignKey: 'parent_id' });
         name: 'user',
       });
 
+      await Role.create({
+        name: 'visitor',
+      });
+
       await User.create({
         name: 'Geoportal-Admin',
         email: 'admin@localhost.com',
@@ -76,4 +83,5 @@ module.exports = {
   Category,
   Layer,
   Activity,
+  Visit,
 };

@@ -27,7 +27,7 @@ AuthController.login = (req, res) => {
             status: user.status,
             created_at: user.created_at,
             updated_at: user.updated_at,
-            role: user.role,
+            role: user.role.name,
           },
           token: token,
         });
@@ -40,6 +40,29 @@ AuthController.login = (req, res) => {
     return res.status(500).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   });
 };
+
+AuthController.signup = (req, res) => {
+  Role.findOne({
+    where: { name: 'visitor' },
+  }).then(role => {
+    User.create({
+      ...req.body,
+      password: generateHash(req.body.password),
+      role_id: role.id_role,
+    }).then(user => {
+      if (!user)
+        return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
+  
+      return res.status(200).send({ data: user.id_user });
+    }).catch(err => {
+      console.log(err);
+      return res.status(500).send({ message: 'Ha ocurrido un error al registrar la cuenta.' });
+    });
+  }).catch(err => {
+    console.log(err);
+    return res.status(500).send({ message: 'Ha ocurrido un error al registrar la cuenta.' });
+  });
+}
 
 AuthController.getData = (req, res) => {
   User.findOne({
