@@ -1,7 +1,7 @@
 module.exports = (sequelize, type) => {
   return sequelize.define('activity', {
     id_activity: {
-      type: type.BIGINT(11),
+      type: type.BIGINT,
       primaryKey: true,
       autoIncrement:true,
     },

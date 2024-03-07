@@ -9,6 +9,8 @@ const ActivityModel = require('./models/activity.model');
 
 const VisitModel = require('./models/visit.model');
 
+const logging = process.env.NODE_ENV !== 'test';
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -17,6 +19,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: process.env.DB_TYPE,
     port: process.env.DB_PORT,
+    logging: logging
   }
 );
 
@@ -44,10 +47,13 @@ Category.hasMany(Category, { onDelete: 'CASCADE', foreignKey: 'parent_id' });
 Category.belongsTo(Category, { as: 'parent', foreignKey: 'parent_id' });
 
 (async () => {
-  await sequelize.sync();
-  console.log('\n*********************************************');
-  console.log('DB is connected ===> schema: public');
-  console.log('*********************************************\n');
+  await sequelize.sync({ logging: logging });
+
+  if(logging) {
+    console.log('\n*********************************************');
+    console.log('DB is connected ===> schema: public');
+    console.log('*********************************************\n');
+  }
 
   try {
     const roles = await Role.findAll();

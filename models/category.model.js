@@ -3,7 +3,7 @@ const { UUIDV4 } = require("sequelize");
 module.exports = (sequelize, type) => {
   return sequelize.define('category', {
     id_category: {
-      type: type.BIGINT(11),
+      type: type.BIGINT,
       primaryKey: true,
       autoIncrement:true,
     },

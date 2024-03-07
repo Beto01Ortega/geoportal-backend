@@ -45,6 +45,9 @@ AuthController.signup = (req, res) => {
   Role.findOne({
     where: { name: 'visitor' },
   }).then(role => {
+    if(! req.body.password){
+      return res.status(400).send({ message: 'Datos incompletos.' });
+    }
     User.create({
       ...req.body,
       password: generateHash(req.body.password),
@@ -53,7 +56,7 @@ AuthController.signup = (req, res) => {
       if (!user)
         return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   
-      return res.status(200).send({ data: user.id_user });
+      return res.status(200).send({ data: user.external_id });
     }).catch(err => {
       console.log(err);
       return res.status(500).send({ message: 'Ha ocurrido un error al registrar la cuenta.' });

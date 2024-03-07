@@ -64,7 +64,7 @@ UsersController.addUser = async (req, res) => {
       if (!user)
         return res.status(400).send({ message: 'Ha ocurrido un error al procesar la solicitud.' });
   
-      return res.status(200).send({ data: user.id_user });
+      return res.status(200).send({ data: user.external_id });
     }).catch(err => {
       console.log(err);
       return res.status(500).send({ message: 'Ha ocurrido un error al guardar el usuario, posiblemente ya exista.' });
