@@ -6,14 +6,14 @@ const GeoLocation = {};
 
 GeoLocation.registerVisit = (req,res) => {
   Visit.findOne({ 
-    where: { ip: req.socket.remoteAddress } 
+    where: { ip: req.body.ip_address } 
   }).then(async (visit) => {
     if(visit) {
       visit.visit_count += 1;
       await visit.save();
       return res.status(200).send({ message: 'OK' });
     } else {
-      axios.get(`${process.env.IPLOCATION_URL}/?ip=${req.socket.remoteAddress}`).then(response => {
+      axios.get(`${process.env.IPLOCATION_URL}/?ip=${req.body.ip_address}`).then(response => {
         let data = response.data;
         Visit.create({
           ip: data.ip,
