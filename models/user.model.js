@@ -8,6 +8,8 @@ module.exports = (sequelize, type) => {
       autoIncrement: true,
     },
     name: type.STRING,
+    institution: type.STRING,
+    country: type.STRING,
     email: {
       type: type.STRING,
       unique: true,
