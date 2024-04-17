@@ -12,7 +12,7 @@ router.get(`/${PATH}/get/:id`, ensureAuth, Controller.getRecord);
 router.get(`/${PATH}/download/:path`, Controller.downloadFile);
 
 router.post(`/${PATH}/shapes`, ensureAuth, uploadFiles, Controller.addLayerShapes);
-router.post(`/${PATH}/raster`, ensureAuth, uploadFile, Controller.addLayerRaster);
+router.post(`/${PATH}/raster`, ensureAuth, uploadFiles, Controller.addLayerRaster);
 router.put(`/${PATH}/:id`, ensureAuth, uploadFile, Controller.editRecord);
 
 

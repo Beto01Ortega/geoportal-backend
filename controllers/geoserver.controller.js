@@ -93,7 +93,7 @@ GeoServerController.addStyles = (req, res) => {
       if(stylesFile) {
         instance.post(`/styles?name=${styles_uuid[0]}_style`, stylesFile, {
           headers: {
-            'Content-Type': 'application/vnd.ogc.se+xml'
+            'Content-Type': layer.type == 'shapes' ? 'application/vnd.ogc.se+xml':'application/vnd.ogc.sld+xml' 
           }
         }).then(response => {
             instance.post(`/layers/${layer.external_id}/styles?default=true`, {

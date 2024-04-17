@@ -136,12 +136,29 @@ LayerController.addLayerShapes = (req, res) => {
 };
 
 LayerController.addLayerRaster = (req, res) => {
-  if(req.file) {
-    let tif = req.file;
+  if(req.files['file']) {
+    let tif = req.files['file'][0];
 
     const external = v4();
     let extension = tif.originalname.split(".").pop();
     const filename  = external + "." + extension;
+
+    var stylesfile = null;
+    if(req.files['styles']) {
+      let styles = req.files['styles'][0];
+      
+      let externalStyles = v4();
+      let extensionStyles = styles.originalname.split(".").pop();; 
+      stylesfile = externalStyles + "." + extensionStyles;
+
+      try {
+        fs.renameSync(styles.destination + "/" + styles.filename, styles.destination + "/" + stylesfile);
+        fs.mkdirSync(`${process.env.ROOT_SHP}/${externalStyles}`);
+        fs.copyFileSync(styles.destination + "/" + stylesfile, `${process.env.ROOT_SHP}/${externalStyles}/${stylesfile}`)
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     try {
       fs.renameSync(tif.destination + "/" + tif.filename, tif.destination + "/" + filename);
@@ -159,6 +176,7 @@ LayerController.addLayerRaster = (req, res) => {
       filename: filename, // para el nombre nativo del geoserver
       filepath: filename, // para descargar
       folderpath: external, // para publicar en el geoserver
+      styles: stylesfile, // para los estilos en geoserver
       published: false,
     }).then(layer => {
       if (!layer)
