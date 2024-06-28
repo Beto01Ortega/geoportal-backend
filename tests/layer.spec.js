@@ -9,19 +9,23 @@ const expect  = chai.expect;
 let app = rewire('../app');
 
 describe('Probando ruta /layers (Capas del Mapa)', () => {
+  // var para token de autorización para realizar las pruebas
   let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjp7ImlkX3JvbGUiOiIxIiwibmFtZSI6ImFkbWluIiwiZXh0ZXJuYWxfaWQiOiJkNjE0MzA3Yi1mMzI1LTQzMGItOGFkNC02MzY2ODA2ZmUzYWQiLCJjcmVhdGVkX2F0IjoiMjAyMy0wNy0wOFQyMjowMDowOS45NjVaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDctMDhUMjI6MDA6MDkuOTY1WiJ9LCJpYXQiOjE2ODg4NTM4NTV9.afDeaY84d5lD4v9kiZd7gIQaRBhLdspEh9GKERC2jxM';
-  let id = null;
-  let external = null;
+  let id = null;        // var para el ID de la capa shape creada
+  let external = null;  // var para el EXTERNAL ID de la capa shape creada
 
-  let id2 = null;
-  let external2 = null;
+  let id2 = null;       // var para el ID de la capa raster creada
+  let external2 = null; // var para el EXTERNAL ID de la capa raster creada 
 
   afterEach(() => {
-    app = rewire('../app');
-    sandbox.restore();
+    app = rewire('../app'); // inyección de dependencias y espionaje de funciones
+    sandbox.restore();      // restaura el ambiente de pruebas
   });
 
+  // Prueba No. 1
   describe('Probar Obtención de Capas', () => {
+
+    // Prueba positiva
     it('GET /all | Debería devolver los datos de las capas registradas.', (done) => {
       request(app)
         .get('/api/v1/layers/all')
@@ -38,6 +42,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba positiva
     it('GET /get/:id | Debería devolver los datos de una capa.', (done) => {
       request(app)
         .get(`/api/v1/layers/get/${external}`)
@@ -53,7 +58,10 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
     });
   });
 
+  // Prueba No. 2
   describe('Probar Creación de Capas Ráster y Vectorial', () => {
+
+    // Prueba positiva
     it('POST /shapes | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .post(`/api/v1/layers/shapes`)
@@ -73,6 +81,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('POST /shapes | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .post(`/api/v1/layers/shapes`)
@@ -87,6 +96,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba positiva
     it('POST /raster | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .post(`/api/v1/layers/raster`)
@@ -105,6 +115,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('POST /raster | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .post(`/api/v1/layers/raster`)
@@ -119,7 +130,10 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
     });
   });
 
+  // Prueba No. 3
   describe('Probar Modificación de Capas', () => {
+
+    // Prueba positiva
     it('PUT /:id | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .put(`/api/v1/layers/${external}`)
@@ -135,6 +149,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('PUT /:id | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .put(`/api/v1/layers/${external}`)
@@ -150,7 +165,10 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
     });
   });
 
+  // Prueba No. 4
   describe('Probar Eliminación de Capas', () => {
+
+    // Prueba positiva
     it('DELETE /:id | (Vectorial) Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .delete(`/api/v1/layers/${external}`)
@@ -162,6 +180,7 @@ describe('Probando ruta /layers (Capas del Mapa)', () => {
         });
     });
 
+    // Prueba positiva
     it('DELETE /:id | (Ráster) Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .delete(`/api/v1/layers/${external2}`)

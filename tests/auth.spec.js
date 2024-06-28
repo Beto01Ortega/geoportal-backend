@@ -9,15 +9,18 @@ const expect  = chai.expect;
 let app = rewire('../app');
 
 describe('Probando ruta /auth (Autorización/Autenticación)', () => {
-  let token = null;
-  let id = null;
+  let token = null; // var para token de autorización
+  let id = null;    // var para ID de la cuenta creada
 
   afterEach(() => {
-    app = rewire('../app');
-    sandbox.restore();
+    app = rewire('../app'); // inyección de dependencias y espionaje de funciones
+    sandbox.restore();      // restaura el ambiente de pruebas
   });
 
+  // Prueba No. 1
   describe('Probando Inicio de Sesión', () => {
+    
+    // Prueba positiva
     it('POST /login | Debería tener éxito cuando se envíen las credenciales correctas.', (done) => {
       request(app)
         .post('/api/v1/auth/login')
@@ -34,7 +37,8 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
           done(err);
         });
     });
-  
+    
+    // Prueba negativa (error)
     it('POST /login | Debería fallar cuando se envíen las credenciales incorrectas.', (done) => {
       request(app)
         .post('/api/v1/auth/login')
@@ -51,7 +55,10 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
     });
   });
 
+  // Prueba No. 2
   describe('Probando obtención de datos de sesión', () => {
+    
+    // Prueba positiva
     it('GET /get-data | Debería devolver los datos del usuario cuando se envía el token de sesión.', (done) => {
       request(app)
         .get('/api/v1/auth/get-data')
@@ -64,7 +71,8 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
           done(err);
         });
     });
-  
+    
+    // Prueba negativa (error)
     it('GET /get-data | Debería fallar cuando NO se envía el token de sesión.', (done) => {
       request(app)
         .get('/api/v1/auth/get-data')
@@ -75,7 +83,8 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
           done(err);
         });
     });
-  
+    
+    // Prueba negativa (error)
     it('GET /get-data | Debería fallar cuando se envía un token de sesión incorrecto.', (done) => {
       request(app)
         .get('/api/v1/auth/get-data')
@@ -89,7 +98,10 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
     });
   });
 
+  // Prueba No. 3
   describe('Probando Registro de Usuario (Visitantes)', () => {
+
+    // Prueba positiva
     it('POST /signup | Debería tener éxito cuando se envíen los datos correctos.', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
@@ -107,6 +119,7 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('POST /signup | Debería fallar cuando se envíen los datos incompletos.', (done) => {
       request(app)
         .post('/api/v1/auth/signup')
@@ -122,6 +135,7 @@ describe('Probando ruta /auth (Autorización/Autenticación)', () => {
     });
   });
 
+  // Se ejecuta después de finalizar las pruebas
   after('after', async () => {
     // Eliminar la cuenta creada
     await request(app)

@@ -9,16 +9,21 @@ const expect  = chai.expect;
 let app = rewire('../app');
 
 describe('Probando ruta /users (Cuentas de Usuario)', () => {
+  // var para el token de autorización para realizar las pruebas (admin)
   let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjp7ImlkX3JvbGUiOiIxIiwibmFtZSI6ImFkbWluIiwiZXh0ZXJuYWxfaWQiOiJkNjE0MzA3Yi1mMzI1LTQzMGItOGFkNC02MzY2ODA2ZmUzYWQiLCJjcmVhdGVkX2F0IjoiMjAyMy0wNy0wOFQyMjowMDowOS45NjVaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDctMDhUMjI6MDA6MDkuOTY1WiJ9LCJpYXQiOjE2ODg4NTM4NTV9.afDeaY84d5lD4v9kiZd7gIQaRBhLdspEh9GKERC2jxM';
+  // var para el token de autorización para realizar las pruebas (visitante)
   let visitor = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEyIiwiZW1haWwiOiJjdWVudGE1QGV4YW1wbGUuY29tIiwicm9sZSI6eyJpZF9yb2xlIjoiMyIsIm5hbWUiOiJ2aXNpdG9yIiwiZXh0ZXJuYWxfaWQiOiJmZWYxMDBjZi04OTNiLTQ4ZGUtYTBlYS0xMmNhOGE3N2QzYjkiLCJjcmVhdGVkX2F0IjoiMjAyNC0wMi0yNlQwMToyMDowMy4zMjJaIiwidXBkYXRlZF9hdCI6IjIwMjQtMDItMjZUMDE6MjA6MDMuMzIyWiJ9LCJpYXQiOjE3MDk3NzQ3OTZ9.NYhJtqPuFmZRnnupnPVTZI0Vr1SUKVWf1vgrL8zhDKI';
-  let id = null;
+  let id = null; // var para el ID del usuario creado
 
   afterEach(() => {
-    app = rewire('../app');
-    sandbox.restore();
+    app = rewire('../app'); // inyección de dependencias y espionaje de funciones
+    sandbox.restore();      // restaura el ambiente de pruebas
   });
 
+  // Prueba No. 1
   describe('Probar Obtención de Usuarios', () => {
+
+    // Prueba positiva
     it('GET /all | Debería devolver los datos de los usuarios registrados.', (done) => {
       request(app)
         .get('/api/v1/users/all')
@@ -34,6 +39,7 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('GET /all | Debería fallar al no tener rol de admin.', (done) => {
       request(app)
         .get('/api/v1/users/all')
@@ -45,6 +51,7 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('GET /all | Debería fallar al no tener el token de autorización.', (done) => {
       request(app)
         .get('/api/v1/users/all')
@@ -55,6 +62,7 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
         });
     });
 
+    // Prueba positiva
     it('GET /get/:id | Debería devolver los datos de un usuario en específico.', (done) => {
       request(app)
         .get(`/api/v1/users/get/${id}`)
@@ -69,7 +77,10 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
     });
   });
 
+  // Prueba No. 2
   describe('Probar Creación de Usuarios', () => {
+
+    // Prueba positiva
     it('POST / | Debería tener éxito cuando se envíen los datos correctos.', (done) => {
       request(app)
         .post('/api/v1/users')
@@ -89,6 +100,7 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('POST / | Debería fallar cuando se envíen los datos incorrectos.', (done) => {
       request(app)
         .post('/api/v1/users')
@@ -107,7 +119,10 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
     });
   });
 
+  // Prueba No. 3
   describe('Probar Eliminar Usuarios', () => {
+
+    // Prueba positiva
     it('DELETE /:id | Debería tener éxito cuando se envían los datos correctos', (done) => {
       request(app)
         .delete(`/api/v1/users/${id}`)
@@ -119,6 +134,7 @@ describe('Probando ruta /users (Cuentas de Usuario)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('DELETE /:id | Debería tener éxito cuando se envían los datos incorrectos', (done) => {
       request(app)
         .delete(`/api/v1/users/${id}`)

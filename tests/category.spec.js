@@ -9,16 +9,20 @@ const expect  = chai.expect;
 let app = rewire('../app');
 
 describe('Probando ruta /categories (Categorías de Capas)', () => {
+  // var para el token de autorización para realizar las pruebas
   let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjp7ImlkX3JvbGUiOiIxIiwibmFtZSI6ImFkbWluIiwiZXh0ZXJuYWxfaWQiOiJkNjE0MzA3Yi1mMzI1LTQzMGItOGFkNC02MzY2ODA2ZmUzYWQiLCJjcmVhdGVkX2F0IjoiMjAyMy0wNy0wOFQyMjowMDowOS45NjVaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDctMDhUMjI6MDA6MDkuOTY1WiJ9LCJpYXQiOjE2ODg4NTM4NTV9.afDeaY84d5lD4v9kiZd7gIQaRBhLdspEh9GKERC2jxM';
-  let id = null;
-  let external = null;
+  let id = null;       // var para el ID de la categoría creada
+  let external = null; // var para el EXTERNAL ID de la categoría creada
 
   afterEach(() => {
-    app = rewire('../app');
-    sandbox.restore();
+    app = rewire('../app'); // inyección de dependencias y espionaje de funciones
+    sandbox.restore();      // restaura el ambiente de pruebas
   });
 
+  // Prueba No. 1
   describe('Probar Obtención de Categorías', () => {
+
+    // Prueba positiva
     it('GET /all | Debería devolver los datos de las categorías registradas.', (done) => {
       request(app)
         .get('/api/v1/categories/all')
@@ -34,6 +38,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba positiva
     it('GET /all/sub/:id | Debería devolver los datos de las subcategorías registradas.', (done) => {
       request(app)
         .get(`/api/v1/categories/all/sub/${id}`)
@@ -45,6 +50,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba positiva
     it('GET /get/:id | Debería devolver los datos de una categoría.', (done) => {
       request(app)
         .get(`/api/v1/categories/get/${external}`)
@@ -60,7 +66,10 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
     });
   });
 
+  // Prueba No. 2
   describe('Probar Creación de Categorías', () => {
+
+    // Prueba positiva
     it('POST / | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .post(`/api/v1/categories`)
@@ -81,6 +90,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba positiva
     it('POST / | Debería tener éxito cuando se envía los datos correctos (Subcategoría).', (done) => {
       request(app)
         .post(`/api/v1/categories`)
@@ -101,6 +111,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('POST / | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .post(`/api/v1/categories`)
@@ -116,7 +127,10 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
     });
   });
 
+  // Prueba No. 3
   describe('Probar Modificación de Categorías', () => {
+
+    // Prueba positiva
     it('PUT /:id | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .put(`/api/v1/categories/${external}`)
@@ -132,6 +146,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('PUT /:id | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .put(`/api/v1/categories/${external}`)
@@ -147,7 +162,10 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
     });
   });
 
+  // Prueba No. 4
   describe('Probar Eliminación de Categorías', () => {
+
+    // Prueba positiva
     it('DELETE /:id | Debería tener éxito cuando se envía los datos correctos.', (done) => {
       request(app)
         .delete(`/api/v1/categories/${external}`)
@@ -159,6 +177,7 @@ describe('Probando ruta /categories (Categorías de Capas)', () => {
         });
     });
 
+    // Prueba negativa (error)
     it('DELETE /:id | Debería fallar cuando se envía los datos incorrectos.', (done) => {
       request(app)
         .delete(`/api/v1/categories/${external}`)
