@@ -142,7 +142,7 @@ AuthController.generateNewPassword = async (req, res) => {
           from: '"Admin" <admin@email.com>',
           to: req.body.email,
           subject: "Nueva contraseña",
-          html: '<div>Email: '+req.body.email+'<br>'+'Clave: '+generated_password
+          html: '<div>Email: '+req.body.email+'<br>'+'Clave: '+generated_password+'</div>'
         }, (err, info) => {
           if (err) {
             console.log("ERROR: ", err);

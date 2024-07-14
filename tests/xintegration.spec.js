@@ -159,7 +159,17 @@ describe('Ejecutando pruebas de integración...', () => {
   after('after', async () => {
     // Eliminar la cuenta creada
     await request(app)
-      .delete(`/api/v1/users/${id}`)
+      .delete(`/api/v1/categories/${category_external}`)
+      .set('Authorization', `Bearer ${token}`)
+      .then(res => {});
+
+    await request(app)
+      .delete(`/api/v1/layers/${layer_shape_external}`)
+      .set('Authorization', `Bearer ${token}`)
+      .then(res => {});
+
+    await request(app)
+      .delete(`/api/v1/layers/${layer_raster_external}`)
       .set('Authorization', `Bearer ${token}`)
       .then(res => {});
   });
