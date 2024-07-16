@@ -139,7 +139,7 @@ AuthController.generateNewPassword = async (req, res) => {
 
       if (process.env.NODE_ENV !== 'development') {
         transport.sendMail({
-          from: '"Admin" <admin@email.com>',
+          from: '"'+process.env.EMAIL_SENDER_NAME+'" <'+process.env.EMAIL_SENDER_EMAIL+'>',
           to: req.body.email,
           subject: "Nueva contraseña",
           html: '<div>Email: '+req.body.email+'<br>'+'Clave: '+generated_password+'</div>'
