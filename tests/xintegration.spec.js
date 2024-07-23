@@ -39,7 +39,7 @@ describe('Ejecutando pruebas de integración...', () => {
       .expect(200)
       .end((err, res) => {
         auth_token = res.body.token;
-        auth_id = res.body.data.id_user;
+        auth_id = res.body.data.external_id;
         expect(res.body).to.have.property('data');
         expect(res.body).to.have.property('token');
         done(err);
@@ -138,7 +138,7 @@ describe('Ejecutando pruebas de integración...', () => {
         {
           "name": "Capa Test Raster",
           "type":"raster",
-          "status": true
+          "status": true,
           "category_id": ${category_id}
         }
       `)
@@ -158,19 +158,25 @@ describe('Ejecutando pruebas de integración...', () => {
   // Se ejecuta después de finalizar las pruebas
   after('after', async () => {
     // Eliminar la cuenta creada
-    await request(app)
-      .delete(`/api/v1/categories/${category_external}`)
-      .set('Authorization', `Bearer ${token}`)
-      .then(res => {});
+    if(category_external) {
+      await request(app)
+        .delete(`/api/v1/categories/${category_external}`)
+        .set('Authorization', `Bearer ${auth_token}`)
+        .then(res => {});
+    }
 
-    await request(app)
-      .delete(`/api/v1/layers/${layer_shape_external}`)
-      .set('Authorization', `Bearer ${token}`)
-      .then(res => {});
+    if(layer_shape_external) {
+      await request(app)
+        .delete(`/api/v1/layers/${layer_shape_external}`)
+        .set('Authorization', `Bearer ${auth_token}`)
+        .then(res => {});
+    }
 
-    await request(app)
-      .delete(`/api/v1/layers/${layer_raster_external}`)
-      .set('Authorization', `Bearer ${token}`)
-      .then(res => {});
+    if(layer_raster_external) {
+      await request(app)
+        .delete(`/api/v1/layers/${layer_raster_external}`)
+        .set('Authorization', `Bearer ${auth_token}`)
+        .then(res => {});
+    }
   });
 });

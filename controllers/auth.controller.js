@@ -27,6 +27,7 @@ AuthController.login = (req, res) => {
             status: user.status,
             created_at: user.created_at,
             updated_at: user.updated_at,
+            external_id: user.external_id,
             role: user.role.name,
           },
           token: token,
